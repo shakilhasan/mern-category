@@ -73,6 +73,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
   const values = watch();
 
   useEffect(() => {
+
     if (isEdit && currentProduct) {
       reset(defaultValues);
     }
