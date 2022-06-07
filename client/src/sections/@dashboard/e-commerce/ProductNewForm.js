@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 // form
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,7 +22,14 @@ import {
   RHFRadioGroup,
   RHFUploadMultiFile,
 } from '../../../components/hook-form';
-import {addProduct, addUser, updateProduct, updateUser} from "../../../helpers/backend_helper";
+import {
+  addCategory,
+  addProduct,
+  addUser,
+  searchCategories,
+  updateProduct,
+  updateUser
+} from "../../../helpers/backend_helper";
 import {countries} from "../../../_mock";
 
 // ----------------------------------------------------------------------
@@ -71,9 +78,11 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
   } = methods;
 
   const values = watch();
-
+  const [categories, setCategories]=useState([]);
   useEffect(() => {
-
+    searchCategories({current:0, pazeSize:40}).then((response)=>{
+      setCategories(response.data);
+    })
     if (isEdit && currentProduct) {
       reset(defaultValues);
     }
@@ -87,16 +96,9 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       console.log(isEdit,"submit ---", getValues())
-      const product = {...currentProduct, ...getValues()}
-      if(isEdit){
-        await updateProduct(product);
-      }else{
-        delete product._id;
-        await addProduct({
-          ...product,
-          images:["https://minimal-assets-api.vercel.app/assets/images/products/product_1.jpg"],
-        });
-      }
+      const category =  getValues();
+        delete category._id;
+        await addCategory(category);
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
       navigate(PATH_DASHBOARD.eCommerce.list);

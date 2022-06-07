@@ -30,5 +30,11 @@ export const SEARCH_BLOGS = "/blogs/search"
 export const ADD_BLOG = "/blogs/create"
 export const UPDATE_BLOG = "/blogs/update"
 
+// CATEGORIES
+export const GET_CATEGORY = "/categories/detail"
+export const SEARCH_CATEGORIES = "/categories/search"
+export const ADD_CATEGORY = "/categories/create"
+export const UPDATE_CATEGORY = "/categories/update"
+
 // RESOURCES
 export const ADD_MANY_RESOURCES = "/resources/createMany"

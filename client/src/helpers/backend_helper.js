@@ -1,5 +1,6 @@
 import { del, get, post, put } from "./api_helper";
 import * as url from "./url_helper";
+import {ADD_CATEGORY, SEARCH_CATEGORIES} from "./url_helper";
 
 //  .............................. AUTH ....................................
 export const userLogin = user => post(url.USER_LOGIN, user, { params: { ...user } });
@@ -28,3 +29,7 @@ export const updateBlog = blog =>  put(url.UPDATE_BLOG, blog)
 //  .............................. RESOURCES ....................................
 // add user
 export const addManyResources = resources => post(url.ADD_MANY_RESOURCES, resources)
+
+//
+export const addCategory = item => post(url.ADD_CATEGORY, item);
+export const searchCategories = item => post(url.SEARCH_CATEGORIES, item)
